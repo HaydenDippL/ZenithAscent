@@ -1,0 +1,40 @@
+<div class="progress-widget-container">
+    <div class="progress-widget hbox">
+        <svg [attr.width]="svg_width" [attr.height]="8 * rect_spacing + 15" (mouseleave)="hideTooltip()">
+            <g *ngFor="let month of data">
+                <g *ngFor="let week of month.weeks; let w = index">
+                    <rect *ngFor="let day of week.days"
+                        [attr.x]="week.offset"
+                        [attr.y]="day[0] * rect_spacing"
+                        [attr.height]="rect_size"
+                        [attr.width]="rect_size"
+                        rx="2"
+                        ry="2"
+                        [attr.fill]="color_scale((1 < day[2] / goal) ? 1 : day[2] / goal)"
+                        (mouseover)="displayTooltip(month.year, month.month, day[1], week.offset, day[0] * rect_spacing, day[2])"
+                        (mouseleave)="hideTooltip()"
+                    />
+                </g>
+                <text *ngIf="month.display_name"
+                    [attr.x]="(month.weeks[0].offset + month.weeks[month.weeks.length - 1].offset + 10) / 2"
+                    [attr.y]="8 * rect_spacing + 5"
+                    font-size="14px"
+                    text-anchor="middle"
+                    fill="#AFB4BD"
+                >{{month.month}}</text>
+            </g>
+            <rect
+                [attr.x]="svg_width - 140"
+                [attr.y]="2"
+                rx="10"
+                ry="10"
+                width="80"
+                height="80"
+                [attr.fill]="color_scale((1 < todays_activity / goal) ? 1 : todays_activity / goal)"
+            />
+        </svg>
+        <div #tooltip class="hidden tooltip">
+            <p></p>
+        </div>
+    </div>
+</div>
