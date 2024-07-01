@@ -11,7 +11,7 @@ describe('ProgressWidgetComponent', () => {
       imports: [ProgressWidgetComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ProgressWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
